@@ -4,6 +4,7 @@ import type { EventEmitter } from "events";
  * Call with an emitter and an object of callbacks, and the first event to be emitted will call the callback.
  * If the callback returns a promise, waits for the promise to resolve or reject. eventSwitch will resolve or reject with the same value.
  * All added listeners are removed before eventSwitch returns.
+ * @param signal When signalled, aborts by removing listeners and rejecting the eventSwitch promise. Try it with `AbortSignal.timeout` and a catch block!
  */
 function eventSwitch(emitter: EventEmitter, cbs: { [eventName: string]: (...args: any[]) => any }, signal?: AbortSignal | null): Promise<void> {
 	const realListeners = new Map<string, (...args: Array<any>) => void>();
